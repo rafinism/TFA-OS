@@ -1,20 +1,4 @@
-﻿export default function Page() {
-  return (
-    <main className="min-h-screen bg-[#0b0b0b] px-6 py-10 text-white">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-white/30">
-          TFA Football Simulator
-        </div>
-
-        <h1 className="text-3xl font-semibold tracking-tight">
-          TFC Results
-        </h1>
-
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-white/40">
-          This section is part of the TFA Football Simulator and will be
-          developed as the complete platform is built.
-        </p>
-      </div>
-    </main>
-  );
+import PublicHeader from "../../../components/public/PublicHeader";
+export default function Page() {
+  return <main className="min-h-screen bg-tfa-background text-tfa-text"><PublicHeader /><div className="mx-auto w-full max-w-5xl px-5 py-10 lg:px-8"><header className="border-b border-tfa-border-subtle pb-8"><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-tfa-text-muted">TFC</p><h1 className="mt-2 text-3xl font-semibold tracking-tight">Results</h1><p className="mt-3 text-sm text-tfa-text-secondary">Verified official cup results.</p></header><section className="mt-8 rounded-2xl border border-dashed border-tfa-border bg-tfa-surface p-12 text-center"><h2 className="text-lg font-semibold">No results published</h2><p className="mx-auto mt-2 max-w-xl text-xs leading-6 text-tfa-text-muted">TFC results will appear after official verification.</p></section></div></main>;
 }
