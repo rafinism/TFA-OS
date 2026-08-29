@@ -1,64 +1,19 @@
-﻿import PublicHeader from "../../../components/public/PublicHeader";
-
-const teams = [
-  ["Club A", 3, 3, 0, 0, 9, 8, 2, 6],
-  ["Club B", 3, 2, 0, 1, 6, 6, 3, 3],
-  ["Club C", 3, 1, 1, 1, 4, 5, 4, 1],
-  ["Club D", 3, 1, 0, 2, 3, 4, 6, -2],
-];
+import PublicHeader from "../../../components/public/PublicHeader";
 
 export default function StandingsPage() {
   return (
-    <main className="min-h-screen bg-[#0b0b0b] text-white">
+    <main className="min-h-screen bg-tfa-background text-tfa-text">
       <PublicHeader />
-
-      <div className="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-        <div className="mb-8">
-          <div className="text-[10px] uppercase tracking-[0.2em] text-white/30">
-            TCL · Season 01
-          </div>
-          <h1 className="mt-3 text-3xl font-semibold">Standings</h1>
-        </div>
-
-        <div className="overflow-x-auto rounded-lg border border-white/10">
-          <table className="w-full min-w-[750px] text-left">
-            <thead>
-              <tr className="border-b border-white/10 bg-white/[0.03] text-[9px] uppercase tracking-[0.12em] text-white/30">
-                <th className="px-5 py-4">#</th>
-                <th className="px-5 py-4">Club</th>
-                <th className="px-4 py-4">P</th>
-                <th className="px-4 py-4">W</th>
-                <th className="px-4 py-4">D</th>
-                <th className="px-4 py-4">L</th>
-                <th className="px-4 py-4">GF</th>
-                <th className="px-4 py-4">GA</th>
-                <th className="px-4 py-4">GD</th>
-                <th className="px-5 py-4 text-right">Pts</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {teams.map((team, index) => (
-                <tr
-                  key={team[0]}
-                  className="border-b border-white/10 last:border-0 hover:bg-white/[0.02]"
-                >
-                  <td className="px-5 py-4 text-xs text-white/30">
-                    {index + 1}
-                  </td>
-                  <td className="px-5 py-4 text-sm font-medium">
-                    {team[0]}
-                  </td>
-                  {team.slice(1).map((value, i) => (
-                    <td key={i} className="px-4 py-4 text-xs text-white/50">
-                      {value}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="mx-auto w-full max-w-7xl px-5 py-10 lg:px-8">
+        <header className="border-b border-tfa-border-subtle pb-8">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-tfa-text-muted">TCL</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Standings</h1>
+          <p className="mt-3 text-sm text-tfa-text-secondary">Official competition table, calculated from verified results.</p>
+        </header>
+        <section className="mt-8 rounded-2xl border border-dashed border-tfa-border bg-tfa-surface p-12 text-center">
+          <h2 className="text-lg font-semibold">No standings available</h2>
+          <p className="mx-auto mt-2 max-w-xl text-xs leading-6 text-tfa-text-muted">A standings table will be calculated from official competition data once a TCL season and verified results exist.</p>
+        </section>
       </div>
     </main>
   );
