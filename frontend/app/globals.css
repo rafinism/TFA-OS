@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+:root {
+  /* ─────────────────────────────────────────
+     TFA — Core Colors
+     ───────────────────────────────────────── */
+
+  --tfa-background: #080808;
+  --tfa-surface: #0f0f0f;
+  --tfa-surface-elevated: #151515;
+  --tfa-surface-hover: #1b1b1b;
+
+  --tfa-border: rgba(255, 255, 255, 0.10);
+  --tfa-border-subtle: rgba(255, 255, 255, 0.06);
+
+  --tfa-text: #ffffff;
+  --tfa-text-secondary: rgba(255, 255, 255, 0.65);
+  --tfa-text-muted: rgba(255, 255, 255, 0.38);
+  --tfa-text-disabled: rgba(255, 255, 255, 0.22);
+
+  /* ─────────────────────────────────────────
+     TFA — Functional Colors
+     ───────────────────────────────────────── */
+
+  --tfa-success: #22c55e;
+  --tfa-warning: #f59e0b;
+  --tfa-danger: #ef4444;
+  --tfa-info: #3b82f6;
+
+  /* ─────────────────────────────────────────
+     TFA — Brand Accent
+     
+     Temporary foundation value.
+     We will replace this with the finalized
+     official TFA brand accent after the
+     visual identity document is locked.
+     ───────────────────────────────────────── */
+
+  --tfa-accent: #ffffff;
+  --tfa-accent-foreground: #000000;
+
+  /* ─────────────────────────────────────────
+     Tailwind Theme Variables
+     ───────────────────────────────────────── */
+
+  --background: var(--tfa-background);
+  --foreground: var(--tfa-text);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-tfa-background: var(--tfa-background);
+  --color-tfa-surface: var(--tfa-surface);
+  --color-tfa-surface-elevated: var(--tfa-surface-elevated);
+  --color-tfa-surface-hover: var(--tfa-surface-hover);
+
+  --color-tfa-border: var(--tfa-border);
+  --color-tfa-border-subtle: var(--tfa-border-subtle);
+
+  --color-tfa-text: var(--tfa-text);
+  --color-tfa-text-secondary: var(--tfa-text-secondary);
+  --color-tfa-text-muted: var(--tfa-text-muted);
+  --color-tfa-text-disabled: var(--tfa-text-disabled);
+
+  --color-tfa-success: var(--tfa-success);
+  --color-tfa-warning: var(--tfa-warning);
+  --color-tfa-danger: var(--tfa-danger);
+  --color-tfa-info: var(--tfa-info);
+
+  --color-tfa-accent: var(--tfa-accent);
+  --color-tfa-accent-foreground: var(--tfa-accent-foreground);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─────────────────────────────────────────
+   Global document styling
+   ───────────────────────────────────────── */
+
+html {
+  background: var(--tfa-background);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--tfa-background);
+  color: var(--tfa-text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Better default box sizing */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default link styling */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Better button behavior */
+
+button {
+  font: inherit;
+}
+
+/* Selection */
+
+::selection {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
