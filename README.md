@@ -26,7 +26,8 @@ The repository is an early implementation. The existing Player Pool UI is an imp
 - Backend: NestJS, TypeScript
 - Database: PostgreSQL
 - ORM: Prisma
-- Local orchestration: Docker Compose
+- Local development: native PostgreSQL on Windows
+- Docker Compose: optional repository artifact; **not required for local development**
 - Authentication foundation: password authentication, JWT strategy, password reset/email-token support
 
 ## Development data
@@ -60,7 +61,15 @@ Detailed domain material belongs under `docs/`.
 
 ## Local development
 
-### Frontend
+Docker is not required.
+
+### 1. PostgreSQL
+
+Install and run PostgreSQL directly on Windows. Create/configure a dedicated development database and put its connection string in `backend/.env`.
+
+Never commit `backend/.env` or real credentials.
+
+### 2. Frontend
 
 ```bash
 cd frontend
@@ -68,12 +77,21 @@ npm install
 npm run dev
 ```
 
-### Backend
+### 3. Backend
 
 ```bash
 cd backend
 npm install
+npx prisma generate
 npm run start:dev
 ```
 
-Configure the backend using `backend/.env.example` and provide a PostgreSQL database.
+Configure the backend using `backend/.env.example` and a local PostgreSQL instance.
+
+### 4. Development seed
+
+After the initial Prisma migration has been created, use the documented development seed process to create the controlled test population. Seed credentials are local-only and must never be committed.
+
+## Docker
+
+`docker-compose.yml` may remain in the repository for future use or deployment experiments, but no contributor or AI agent should require Docker, WSL2, Hyper-V, or virtualization to run the local development environment unless this project decision is explicitly changed later.
