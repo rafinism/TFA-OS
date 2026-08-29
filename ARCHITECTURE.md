@@ -2,7 +2,21 @@
 
 ## Current repository architecture
 
-TFA-OS currently has a Next.js frontend, a NestJS backend, Prisma, PostgreSQL configuration, and Docker Compose configuration. The current Prisma schema contains foundational identity, Clubs, Managers, competitions, Players, contracts, TCP accounts/transactions, matches, audit logs, and notifications.
+TFA-OS currently has a Next.js frontend, a NestJS backend, Prisma, and PostgreSQL as its database technology. Docker Compose remains in the repository as an optional/development artifact, but Docker is **not required for local development** and is not part of the current development workflow.
+
+## Local development model
+
+```text
+Windows
+  │
+  ├── Next.js frontend
+  ├── NestJS API
+  └── Native PostgreSQL
+          │
+        Prisma
+```
+
+The application must work without Docker or virtualization enabled.
 
 ## Target architectural model
 
@@ -84,3 +98,4 @@ The existing Player Pool UI and Constitution presentation must be preserved and 
 - Do not use hard-coded mock business data in normal application paths.
 - Keep TCL and TFC domain logic separate.
 - Keep financial mutations ledger-based and transactional.
+- Docker is optional and must not be a prerequisite for local development.
