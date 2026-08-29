@@ -12,6 +12,24 @@ Every major TFA-OS feature must be testable through real database-backed workflo
 - 12 Clubs
 - Visitors tested without authentication
 
+The development accounts are credentials supplied locally by the developer. They must never be committed to Git.
+
+## Current development seed
+
+The backend includes a repeatable Prisma seed script at `backend/prisma/seed.js`.
+
+Setup:
+
+1. Copy `backend/prisma/seed-accounts.example.json` to `backend/prisma/seed-accounts.json`.
+2. Replace every placeholder with the actual development email/password values.
+3. Keep exactly 16 users, exactly 12 of them with `clubName`, and exactly one President/Admin.
+4. Ensure `backend/prisma/seed-accounts.json` remains untracked; it is explicitly ignored by Git.
+5. After the database schema exists, run `npm run prisma:seed` from `backend`.
+
+The seed creates or updates the development users, 12 manager clubs, Manager records, ClubManager relationships, and the corresponding Club TCP accounts. It does not assign a starting TCP balance because the authoritative financial initialization must come from the agreed TFA rules rather than an invented seed value.
+
+For a completely reproducible development reset, use `npm run prisma:reset` only against the development database, then seed again. Never run the reset command against production.
+
 ## Required test layers
 
 ### Unit tests
@@ -37,10 +55,6 @@ Use for critical user journeys across browser → API → database.
 - Player Rights cannot be duplicated or silently lost.
 - Player Right loans do not transfer Club ownership permanently.
 - Public views reflect actual database state.
-
-## Reset and seed
-
-Development data must be reproducible from a clean database. A future seed command should create only clearly identified development data and must never be used automatically against production.
 
 ## Completion standard
 
