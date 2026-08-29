@@ -1,39 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  --tfa-background: #f7f7f5;
-  --tfa-surface: #ffffff;
-  --tfa-surface-elevated: #ffffff;
-  --tfa-surface-hover: #f0f0ed;
-  --tfa-border: rgba(20, 20, 20, 0.10);
-  --tfa-border-subtle: rgba(20, 20, 20, 0.065);
-  --tfa-text: #111111;
-  --tfa-text-secondary: rgba(17, 17, 17, 0.68);
-  --tfa-text-muted: rgba(17, 17, 17, 0.46);
-  --tfa-text-disabled: rgba(17, 17, 17, 0.28);
-  --tfa-success: #16834b;
-  --tfa-warning: #a96500;
-  --tfa-danger: #c52f3c;
-  --tfa-info: #2769b8;
-  --tfa-accent: #111111;
-  --tfa-accent-foreground: #ffffff;
+  --tfa-background: #e9e8e3;
+  --tfa-surface: #f1f0eb;
+  --tfa-surface-elevated: #f7f6f2;
+  --tfa-surface-hover: #e4e3de;
+  --tfa-border: rgba(18, 18, 18, 0.13);
+  --tfa-border-subtle: rgba(18, 18, 18, 0.075);
+  --tfa-text: #151515;
+  --tfa-text-secondary: rgba(21, 21, 21, 0.72);
+  --tfa-text-muted: rgba(21, 21, 21, 0.52);
+  --tfa-text-disabled: rgba(21, 21, 21, 0.34);
+  --tfa-success: #167548;
+  --tfa-warning: #956000;
+  --tfa-danger: #b52c38;
+  --tfa-info: #245e9f;
+  --tfa-accent: #151515;
+  --tfa-accent-foreground: #f7f6f2;
   --background: var(--tfa-background);
   --foreground: var(--tfa-text);
 }
 
 .dark {
-  --tfa-background: #090909;
-  --tfa-surface: #101010;
-  --tfa-surface-elevated: #171717;
-  --tfa-surface-hover: #1d1d1d;
-  --tfa-border: rgba(255, 255, 255, 0.12);
-  --tfa-border-subtle: rgba(255, 255, 255, 0.07);
-  --tfa-text: #f7f7f5;
-  --tfa-text-secondary: rgba(247, 247, 245, 0.68);
-  --tfa-text-muted: rgba(247, 247, 245, 0.46);
-  --tfa-text-disabled: rgba(247, 247, 245, 0.28);
-  --tfa-accent: #f7f7f5;
-  --tfa-accent-foreground: #0b0b0b;
+  --tfa-background: #0c0d0d;
+  --tfa-surface: #131515;
+  --tfa-surface-elevated: #1a1d1d;
+  --tfa-surface-hover: #202424;
+  --tfa-border: rgba(255, 255, 255, 0.14);
+  --tfa-border-subtle: rgba(255, 255, 255, 0.075);
+  --tfa-text: #f2f1ed;
+  --tfa-text-secondary: rgba(242, 241, 237, 0.74);
+  --tfa-text-muted: rgba(242, 241, 237, 0.52);
+  --tfa-text-disabled: rgba(242, 241, 237, 0.32);
+  --tfa-success: #47b981;
+  --tfa-warning: #e0a33b;
+  --tfa-danger: #ee6872;
+  --tfa-info: #72a9df;
+  --tfa-accent: #f2f1ed;
+  --tfa-accent-foreground: #111313;
 }
 
 @theme inline {
@@ -84,7 +88,7 @@ a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
 button { cursor: pointer; }
 
-::selection { background: color-mix(in srgb, var(--tfa-text) 18%, transparent); }
+::selection { background: color-mix(in srgb, var(--tfa-info) 22%, transparent); }
 
 :focus-visible {
   outline: 2px solid var(--tfa-info);
