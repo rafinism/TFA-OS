@@ -1,0 +1,101 @@
+{
+  "admin": {
+    "email": "YOUR-PRESIDENT-EMAIL",
+    "password": "YOUR-PRESIDENT-PASSWORD",
+    "displayName": "TFA President"
+  },
+  "users": [
+    {
+      "email": "MANAGER-01-EMAIL",
+      "password": "MANAGER-01-PASSWORD",
+      "displayName": "Manager 01",
+      "clubName": "TFA Club 01"
+    },
+    {
+      "email": "MANAGER-02-EMAIL",
+      "password": "MANAGER-02-PASSWORD",
+      "displayName": "Manager 02",
+      "clubName": "TFA Club 02"
+    },
+    {
+      "email": "MANAGER-03-EMAIL",
+      "password": "MANAGER-03-PASSWORD",
+      "displayName": "Manager 03",
+      "clubName": "TFA Club 03"
+    },
+    {
+      "email": "MANAGER-04-EMAIL",
+      "password": "MANAGER-04-PASSWORD",
+      "displayName": "Manager 04",
+      "clubName": "TFA Club 04"
+    },
+    {
+      "email": "MANAGER-05-EMAIL",
+      "password": "MANAGER-05-PASSWORD",
+      "displayName": "Manager 05",
+      "clubName": "TFA Club 05"
+    },
+    {
+      "email": "MANAGER-06-EMAIL",
+      "password": "MANAGER-06-PASSWORD",
+      "displayName": "Manager 06",
+      "clubName": "TFA Club 06"
+    },
+    {
+      "email": "MANAGER-07-EMAIL",
+      "password": "MANAGER-07-PASSWORD",
+      "displayName": "Manager 07",
+      "clubName": "TFA Club 07"
+    },
+    {
+      "email": "MANAGER-08-EMAIL",
+      "password": "MANAGER-08-PASSWORD",
+      "displayName": "Manager 08",
+      "clubName": "TFA Club 08"
+    },
+    {
+      "email": "MANAGER-09-EMAIL",
+      "password": "MANAGER-09-PASSWORD",
+      "displayName": "Manager 09",
+      "clubName": "TFA Club 09"
+    },
+    {
+      "email": "MANAGER-10-EMAIL",
+      "password": "MANAGER-10-PASSWORD",
+      "displayName": "Manager 10",
+      "clubName": "TFA Club 10"
+    },
+    {
+      "email": "MANAGER-11-EMAIL",
+      "password": "MANAGER-11-PASSWORD",
+      "displayName": "Manager 11",
+      "clubName": "TFA Club 11"
+    },
+    {
+      "email": "MANAGER-12-EMAIL",
+      "password": "MANAGER-12-PASSWORD",
+      "displayName": "Manager 12",
+      "clubName": "TFA Club 12"
+    },
+    {
+      "email": "USER-13-EMAIL",
+      "password": "USER-13-PASSWORD",
+      "displayName": "Registered User 13"
+    },
+    {
+      "email": "USER-14-EMAIL",
+      "password": "USER-14-PASSWORD",
+      "displayName": "Registered User 14"
+    },
+    {
+      "email": "USER-15-EMAIL",
+      "password": "USER-15-PASSWORD",
+      "displayName": "Registered User 15"
+    },
+    {
+      "email": "USER-16-EMAIL",
+      "password": "USER-16-PASSWORD",
+      "displayName": "Registered User 16"
+    }
+  ]
+}
