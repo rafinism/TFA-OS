@@ -1,192 +1,63 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Laptop, Moon, Sun } from "lucide-react";
+import { useTheme } from "../theme/ThemeProvider";
 
-const tclLinks = [
-  { label: "Current Season", href: "/tcl" },
-  { label: "Table", href: "/tcl/standings" },
-  { label: "Fixtures", href: "/tcl/fixtures" },
-  { label: "Results", href: "/tcl/results" },
-  { label: "Teams", href: "/tcl/clubs" },
-  { label: "Players", href: "/tcl/players" },
-  { label: "Statistics", href: "/tcl/statistics" },
-  { label: "Seasons", href: "/tcl/seasons" },
+const links = [
+  { label: "TCL", href: "/tcl" },
+  { label: "TFC", href: "/tfc" },
+  { label: "Player Pool", href: "/tcl/players" },
+  { label: "Announcements", href: "/announcements" },
+  { label: "Constitution", href: "/constitution" },
 ];
 
 export default function PublicHeader() {
-  const [dark, setDark] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.localStorage.getItem("tfa-theme") !== "light";
-  });
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
-  useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [dark]);
-
-  function toggleTheme() {
-    const nextDark = !dark;
-
-    setDark(nextDark);
-
-    if (nextDark) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("tfa-theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("tfa-theme", "light");
-    }
-  }
+  const cycleTheme = () => {
+    setTheme(theme === "light" ? "dark" : theme === "dark" ? "system" : "light");
+  };
 
   return (
-    <header
-      className={`border-b transition-colors ${
-        dark
-          ? "border-white/10 bg-[#0b0b0b] text-white"
-          : "border-black/10 bg-white text-black"
-      }`}
-    >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8">
-        {/* Brand */}
-        <Link href="/" className="flex shrink-0 items-center gap-3">
+    <header className="sticky top-0 z-40 border-b border-tfa-border-subtle bg-tfa-background/90 text-tfa-text backdrop-blur-xl">
+      <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-6 px-5 lg:px-8">
+        <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="TFA home">
           <img
-            src={dark ? "/tfa-logo-white.png" : "/tfa-logo-black.png"}
+            src={resolvedTheme === "dark" ? "/tfa-logo-white.png" : "/tfa-logo-black.png"}
             alt="TESL Football Association"
-            className="h-12 w-12 shrink-0 object-contain"
+            className="h-10 w-10 object-contain"
           />
-
-          <div className="flex flex-col justify-center leading-none">
-            <div
-              className={`text-[11px] font-semibold uppercase tracking-[0.12em] ${
-                dark ? "text-white" : "text-black"
-              }`}
-            >
-              TESL
-            </div>
-
-            <div
-              className={`mt-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${
-                dark ? "text-white" : "text-black"
-              }`}
-            >
-              FOOTBALL ASSOCIATION
-            </div>
+          <div className="hidden leading-none sm:block">
+            <div className="text-[10px] font-bold uppercase tracking-[0.16em]">TESL</div>
+            <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.14em] text-tfa-text-muted">Football Association</div>
           </div>
         </Link>
 
-        {/* Navigation */}
-        <nav className="hidden items-center gap-1 lg:flex">
-          <Link
-            href="/"
-            className={`rounded-md px-3 py-2 text-xs transition ${
-              dark
-                ? "text-white/55 hover:bg-white/[0.05] hover:text-white"
-                : "text-black/55 hover:bg-black/[0.05] hover:text-black"
-            }`}
-          >
-            Home
-          </Link>
-
-          {/* TCL */}
-          <div className="group relative">
-            <button
-              type="button"
-              className={`flex items-center gap-1 rounded-md px-3 py-2 text-xs transition ${
-                dark
-                  ? "text-white/55 hover:bg-white/[0.05] hover:text-white"
-                  : "text-black/55 hover:bg-black/[0.05] hover:text-black"
-              }`}
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="rounded-lg px-3 py-2 text-xs font-medium text-tfa-text-secondary transition-colors hover:bg-tfa-surface-hover hover:text-tfa-text"
             >
-              TCL
-              <ChevronDown size={12} />
-            </button>
-
-            <div
-              className={`invisible absolute left-0 top-full z-50 mt-1 w-44 rounded-md border p-1 opacity-0 shadow-xl transition group-hover:visible group-hover:opacity-100 ${
-                dark
-                  ? "border-white/10 bg-[#111111]"
-                  : "border-black/10 bg-white"
-              }`}
-            >
-              {tclLinks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`block rounded px-3 py-2 text-xs transition ${
-                    dark
-                      ? "text-white/55 hover:bg-white/[0.05] hover:text-white"
-                      : "text-black/55 hover:bg-black/[0.05] hover:text-black"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <Link
-            href="/tfc"
-            className={`rounded-md px-3 py-2 text-xs transition ${
-              dark
-                ? "text-white/55 hover:bg-white/[0.05] hover:text-white"
-                : "text-black/55 hover:bg-black/[0.05] hover:text-black"
-            }`}
-          >
-            TFC
-          </Link>
-
-          <Link
-            href="/announcements"
-            className={`rounded-md px-3 py-2 text-xs transition ${
-              dark
-                ? "text-white/55 hover:bg-white/[0.05] hover:text-white"
-                : "text-black/55 hover:bg-black/[0.05] hover:text-black"
-            }`}
-          >
-            Announcements
-          </Link>
-
-          <Link
-            href="/constitution"
-            className={`rounded-md px-3 py-2 text-xs transition ${
-              dark
-                ? "text-white/55 hover:bg-white/[0.05] hover:text-white"
-                : "text-black/55 hover:bg-black/[0.05] hover:text-black"
-            }`}
-          >
-            Constitution
-          </Link>
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* Right side */}
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className={`flex h-9 w-9 items-center justify-center rounded-md border transition ${
-              dark
-                ? "border-white/10 text-white/45 hover:bg-white/[0.05] hover:text-white"
-                : "border-black/10 text-black/45 hover:bg-black/[0.05] hover:text-black"
-            }`}
+            onClick={cycleTheme}
+            aria-label={`Theme: ${theme}`}
+            title={`Theme: ${theme}`}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-tfa-border-subtle text-tfa-text-muted transition-colors hover:bg-tfa-surface-hover hover:text-tfa-text"
           >
-            {dark ? <Sun size={15} /> : <Moon size={15} />}
+            {theme === "system" ? <Laptop size={16} /> : resolvedTheme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
           </button>
-
-          <Link
-            href="/login"
-            className={`rounded-md border px-4 py-2 text-xs font-medium transition ${
-              dark
-                ? "border-white/10 text-white/70 hover:bg-white/[0.05] hover:text-white"
-                : "border-black/10 text-black/70 hover:bg-black/[0.05] hover:text-black"
-            }`}
-          >
-            Log In
+          <Link href="/login" className="rounded-lg bg-tfa-accent px-4 py-2.5 text-xs font-semibold text-tfa-accent-foreground transition-opacity hover:opacity-85">
+            Sign in
           </Link>
         </div>
       </div>
