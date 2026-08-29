@@ -1,22 +1,18 @@
-﻿import PublicHeader from "../../../components/public/PublicHeader";
-
+import PublicHeader from "../../../components/public/PublicHeader";
 export default function Page() {
   return (
-    <main className="min-h-screen bg-[#0b0b0b] text-white">
+    <main className="min-h-screen bg-tfa-background text-tfa-text">
       <PublicHeader />
-
-      <div className="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-        <div className="text-[10px] uppercase tracking-[0.2em] text-white/30">
-          TCL
-        </div>
-
-        <h1 className="mt-3 text-3xl font-semibold">
-          TCL Statistics
-        </h1>
-
-        <p className="mt-3 text-sm text-white/40">
-          This section will contain the complete public TCL information.
-        </p>
+      <div className="mx-auto w-full max-w-7xl px-5 py-10 lg:px-8">
+        <header className="border-b border-tfa-border-subtle pb-8">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-tfa-text-muted">TCL</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Statistics</h1>
+          <p className="mt-3 text-sm text-tfa-text-secondary">Official competition statistics calculated from verified match records.</p>
+        </header>
+        <section className="mt-8 rounded-2xl border border-dashed border-tfa-border bg-tfa-surface p-12 text-center">
+          <h2 className="text-lg font-semibold">No statistics available</h2>
+          <p className="mx-auto mt-2 max-w-xl text-xs leading-6 text-tfa-text-muted">Statistics will be calculated automatically when verified competition results exist.</p>
+        </section>
       </div>
     </main>
   );
