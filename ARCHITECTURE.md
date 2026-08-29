@@ -47,9 +47,9 @@ TFA-OS
 
 ## 4. Current backend boundary
 
-`AppModule` currently loads global configuration, Prisma and Auth only. The backend therefore has a real application/authentication foundation but does not yet expose modules for clubs, players, squads, competitions, matches, contracts, transfers, finance, announcements or audit operations beyond the schema. fileciteturn83file0L2-L6
+`AppModule` currently loads global configuration, Prisma and Auth only. The backend therefore has a real application/authentication foundation but does not yet expose modules for clubs, players, squads, competitions, matches, contracts, transfers, finance, announcements or audit operations beyond the schema.
 
-The API uses the `/api` global prefix, CORS is currently broadly enabled, and a global validation pipe uses whitelist, forbid-non-whitelisted and transform settings. fileciteturn70file0L2-L6
+The API uses the `/api` global prefix, CORS is currently broadly enabled, and a global validation pipe uses whitelist, forbid-non-whitelisted and transform settings.
 
 ## 5. Intended domain architecture
 
@@ -90,7 +90,7 @@ These are architectural boundaries, not permission to invent business rules.
 
 The frontend already contains public, manager and admin route families and reusable layout components. Several pages are UI prototypes using hardcoded/local state rather than backend data. The admin player page is a comparatively substantial client-side prototype with player editing, filtering, country flags, image handling and crop tooling.
 
-The public home page currently renders hardcoded example results, fixtures, announcements, standings and Season 01/TCL summary information rather than live API data. fileciteturn73file0L2-L6
+The public home page currently renders hardcoded example results, fixtures, announcements, standings and Season 01/TCL summary information rather than live API data.
 
 ## 7. Integration direction
 
