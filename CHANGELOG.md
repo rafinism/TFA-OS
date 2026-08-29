@@ -11,6 +11,10 @@ All significant project changes should be recorded here. This file records proje
 - Documented Player Rights separately from Players and Player Cards.
 - Clarified that a Player Right Loan is a Club-to-Club temporary right arrangement, not a Treasury financing product.
 - Documented current architecture, database direction, sitemap, feature inventory, roadmap, and security requirements.
+- Added backend role metadata and hierarchical role authorization infrastructure.
+- Updated JWT configuration to require `JWT_SECRET` through application configuration.
+- Added a repeatable development seed workflow for 1 President, 16 Registered Users, 12 Managers, 12 Clubs, and Club TCP accounts.
+- Added a local-only seed credential template and explicit Git ignore rule for the filled credential file.
 
 ## Existing baseline
 
