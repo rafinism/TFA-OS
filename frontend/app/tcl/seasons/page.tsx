@@ -1,64 +1,19 @@
-﻿import Link from "next/link";
 import PublicHeader from "../../../components/public/PublicHeader";
-
-const seasons = [
-  {
-    season: "Season 01",
-    status: "Current",
-    champion: "TBD",
-    clubs: 12,
-  },
-];
 
 export default function SeasonsPage() {
   return (
-    <main className="min-h-screen bg-[#0b0b0b] text-white">
+    <main className="min-h-screen bg-tfa-background text-tfa-text">
       <PublicHeader />
-
-      <div className="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-        <div className="mb-8">
-          <div className="text-[10px] uppercase tracking-[0.2em] text-white/30">
-            TCL
-          </div>
-
-          <h1 className="mt-3 text-3xl font-semibold">
-            Season History
-          </h1>
-
-          <p className="mt-3 max-w-2xl text-sm text-white/35">
-            Browse TCL seasons and historical competition information.
-          </p>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {seasons.map((season) => (
-            <Link
-              key={season.season}
-              href="/tcl"
-              className="rounded-lg border border-white/10 bg-white/[0.02] p-6 hover:bg-white/[0.04]"
-            >
-              <div className="text-[9px] uppercase tracking-[0.15em] text-white/25">
-                {season.status}
-              </div>
-
-              <div className="mt-2 text-xl font-semibold">
-                {season.season}
-              </div>
-
-              <div className="mt-5 space-y-2 border-t border-white/10 pt-4 text-xs text-white/40">
-                <div className="flex justify-between">
-                  <span>Clubs</span>
-                  <span>{season.clubs}</span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span>Champion</span>
-                  <span>{season.champion}</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+      <div className="mx-auto w-full max-w-7xl px-5 py-10 lg:px-8">
+        <header className="border-b border-tfa-border-subtle pb-8">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-tfa-text-muted">TCL</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Season history</h1>
+          <p className="mt-3 text-sm text-tfa-text-secondary">Published TCL seasons and permanent competition records.</p>
+        </header>
+        <section className="mt-8 rounded-2xl border border-dashed border-tfa-border bg-tfa-surface p-12 text-center">
+          <h2 className="text-lg font-semibold">No seasons published</h2>
+          <p className="mx-auto mt-2 max-w-xl text-xs leading-6 text-tfa-text-muted">Historical seasons will appear here from the database once official season records exist.</p>
+        </section>
       </div>
     </main>
   );
