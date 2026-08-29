@@ -9,7 +9,8 @@
 
 ## Phase 1 — Foundation
 
-- Establish development PostgreSQL workflow.
+- Establish native PostgreSQL development workflow on Windows.
+- Docker remains optional and is not a prerequisite.
 - Complete authentication and session lifecycle.
 - Establish backend module boundaries and authorization.
 - Establish repeatable database migrations/reset/seed.
