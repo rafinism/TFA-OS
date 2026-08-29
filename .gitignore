@@ -28,6 +28,11 @@ build/
 !.env.example
 
 # ============================================
+# Development-only seed credentials
+# ============================================
+backend/prisma/seed-accounts.json
+
+# ============================================
 # Logs
 # ============================================
 *.log
@@ -61,5 +66,3 @@ desktop.ini
 # Local AI / codebase snapshots
 # ============================================
 codebase.txt
-# TypeScript build cache
-*.tsbuildinfo
