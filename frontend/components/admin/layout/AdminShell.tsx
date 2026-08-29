@@ -1,21 +1,13 @@
 import AdminSidebar from "./AdminSidebar";
 import AdminTopbar from "./AdminTopbar";
 
-export default function AdminShell({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AdminShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-[#0b0b0b] text-white">
+    <div className="min-h-screen bg-tfa-background text-tfa-text">
       <AdminSidebar />
-
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="min-h-screen lg:pl-64">
         <AdminTopbar />
-
-        <main className="min-w-0 flex-1 overflow-auto">
-          {children}
-        </main>
+        <main className="min-w-0">{children}</main>
       </div>
     </div>
   );
