@@ -61,6 +61,8 @@ desktop.ini
 *.tmp
 *.temp
 *.backup
+*.swp
+*.swo
 
 # ============================================
 # Local AI / codebase snapshots
