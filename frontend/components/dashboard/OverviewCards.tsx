@@ -1,36 +1,25 @@
-"use client";
-
-import {
-  Coins,
-  Users,
-  Trophy,
-  ShieldCheck,
-} from "lucide-react";
+import { BarChart3, Coins, Shield, Users } from "lucide-react";
 
 const cards = [
   {
-    label: "TCP Balance",
-    value: "1,000",
-    description: "Available club funds",
+    label: "Club balance",
+    description: "Available once your account is linked to a club.",
     icon: Coins,
   },
   {
     label: "Squad",
-    value: "25 / 25",
-    description: "Registered players",
+    description: "Your club squad will appear here for Managers.",
     icon: Users,
   },
   {
-    label: "TCL Matches",
-    value: "0",
-    description: "Matches completed",
-    icon: Trophy,
+    label: "TCL record",
+    description: "Competition statistics will appear here.",
+    icon: BarChart3,
   },
   {
-    label: "League Position",
-    value: "—",
-    description: "Current TCL position",
-    icon: ShieldCheck,
+    label: "Standing",
+    description: "Your current competition position will appear here.",
+    icon: Shield,
   },
 ];
 
@@ -43,27 +32,17 @@ export default function OverviewCards() {
         return (
           <div
             key={card.label}
-            className="rounded-lg border border-white/10 bg-white/[0.025] p-5 transition hover:border-white/15 hover:bg-white/[0.04]"
+            className="rounded-lg border border-tfa-border-subtle bg-tfa-surface p-5"
           >
             <div className="mb-5 flex items-center justify-between">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/35">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-tfa-text-muted">
                 {card.label}
               </div>
-
-              <Icon
-                size={16}
-                strokeWidth={1.7}
-                className="text-white/30"
-              />
+              <Icon size={16} strokeWidth={1.7} className="text-tfa-text-disabled" />
             </div>
 
-            <div className="text-2xl font-semibold tracking-tight text-white">
-              {card.value}
-            </div>
-
-            <div className="mt-1 text-xs text-white/35">
-              {card.description}
-            </div>
+            <div className="text-2xl font-semibold tracking-tight text-tfa-text">—</div>
+            <div className="mt-1 text-xs text-tfa-text-muted">{card.description}</div>
           </div>
         );
       })}
