@@ -56,8 +56,11 @@ export default function PublicHeader() {
           >
             {theme === "system" ? <Laptop size={16} /> : resolvedTheme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
           </button>
-          <Link href="/login" className="rounded-lg bg-tfa-accent px-4 py-2.5 text-xs font-semibold text-tfa-accent-foreground transition-opacity hover:opacity-85">
+          <Link href="/login" className="rounded-lg border border-tfa-border bg-tfa-surface px-4 py-2.5 text-xs font-semibold text-tfa-text transition-colors hover:bg-tfa-surface-hover">
             Sign in
+          </Link>
+          <Link href="/register" className="rounded-lg bg-tfa-accent px-4 py-2.5 text-xs font-semibold text-tfa-accent-foreground transition-opacity hover:opacity-85">
+            Sign up
           </Link>
         </div>
       </div>
