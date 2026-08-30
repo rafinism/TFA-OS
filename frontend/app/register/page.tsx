@@ -60,7 +60,10 @@ export default function RegisterPage() {
               <p className="mt-2 text-sm leading-6 text-tfa-text-secondary">
                 Your TFA account has been created successfully. You can now sign in with the email and password you registered.
               </p>
-              <Link href="/login" className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-tfa-accent px-4 text-sm font-semibold text-tfa-accent-foreground transition-opacity hover:opacity-85">
+              <Link
+                href="/login"
+                className="mt-8 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[var(--tfa-accent)] px-4 text-sm font-semibold text-[var(--tfa-accent-foreground)] transition-opacity hover:opacity-85"
+              >
                 Continue to sign in
               </Link>
             </>
@@ -135,7 +138,7 @@ export default function RegisterPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-tfa-accent px-4 text-sm font-semibold text-tfa-accent-foreground transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--tfa-accent)] px-4 text-sm font-semibold text-[var(--tfa-accent-foreground)] transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading && <LoaderCircle size={16} className="animate-spin" />}
                   {loading ? "Creating account…" : "Create account"}
