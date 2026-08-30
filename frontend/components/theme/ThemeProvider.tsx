@@ -2,68 +2,48 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-type Theme = "light" | "dark" | "system";
+type Theme = "light" | "dark";
 
 type ThemeContextValue = {
   theme: Theme;
-  resolvedTheme: "light" | "dark";
+  resolvedTheme: Theme;
   setTheme: (theme: Theme) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 const STORAGE_KEY = "tfa-theme";
 
-function resolveTheme(theme: Theme): "light" | "dark" {
-  if (theme !== "system") return theme;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
 function applyTheme(theme: Theme) {
-  const resolved = resolveTheme(theme);
   const root = document.documentElement;
   root.classList.remove("light", "dark");
-  root.classList.add(resolved);
-  root.style.colorScheme = resolved;
+  root.classList.add(theme);
+  root.style.colorScheme = theme;
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+  const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    const initial: Theme = stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
+    const initial: Theme = stored === "dark" ? "dark" : "light";
     setThemeState(initial);
     applyTheme(initial);
-    setResolvedTheme(resolveTheme(initial));
   }, []);
 
   useEffect(() => {
-    if (theme === "system") {
-      const media = window.matchMedia("(prefers-color-scheme: dark)");
-      const update = () => {
-        applyTheme("system");
-        setResolvedTheme(media.matches ? "dark" : "light");
-      };
-      update();
-      media.addEventListener("change", update);
-      return () => media.removeEventListener("change", update);
-    }
-
     applyTheme(theme);
-    setResolvedTheme(theme);
   }, [theme]);
 
   const value = useMemo(
     () => ({
       theme,
-      resolvedTheme,
+      resolvedTheme: theme,
       setTheme: (next: Theme) => {
         localStorage.setItem(STORAGE_KEY, next);
         setThemeState(next);
       },
     }),
-    [theme, resolvedTheme],
+    [theme],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
