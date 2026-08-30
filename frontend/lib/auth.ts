@@ -44,6 +44,13 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return data as T;
 }
 
+export async function register(email: string, password: string, displayName: string) {
+  return request<AuthUser>("/auth/register", {
+    method: "POST",
+    body: JSON.stringify({ email, password, displayName }),
+  });
+}
+
 export async function login(email: string, password: string) {
   const result = await request<AuthResponse>("/auth/login", {
     method: "POST",
