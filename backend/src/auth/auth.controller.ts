@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -37,7 +37,4 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   me(@Req() request: AuthenticatedRequest) { return this.authService.getProfile(request.user.id); }
-
-  @Get('verify-email')
-  verifyEmailByQuery(@Query() dto: VerifyEmailDto) { return this.authService.verifyEmail(dto); }
 }
