@@ -52,14 +52,20 @@ export default function PublicHeader() {
             onClick={cycleTheme}
             aria-label={`Theme: ${theme}`}
             title={`Theme: ${theme}`}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-tfa-border-subtle text-tfa-text-muted transition-colors hover:bg-tfa-surface-hover hover:text-tfa-text"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-tfa-border-subtle bg-[var(--tfa-surface)] text-[var(--tfa-text)] transition-colors hover:bg-tfa-surface-hover"
           >
             {theme === "system" ? <Laptop size={16} /> : resolvedTheme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
           </button>
-          <Link href="/login" className="rounded-lg border border-tfa-border bg-tfa-surface px-4 py-2.5 text-xs font-semibold text-tfa-text transition-colors hover:bg-tfa-surface-hover">
+          <Link
+            href="/login"
+            className="inline-flex items-center justify-center rounded-lg border border-tfa-border bg-[var(--tfa-surface)] px-4 py-2.5 text-xs font-semibold text-[var(--tfa-text)] transition-colors hover:bg-tfa-surface-hover"
+          >
             Sign in
           </Link>
-          <Link href="/register" className="rounded-lg bg-tfa-accent px-4 py-2.5 text-xs font-semibold text-tfa-accent-foreground transition-opacity hover:opacity-85">
+          <Link
+            href="/register"
+            className="inline-flex items-center justify-center rounded-lg bg-[var(--tfa-accent)] px-4 py-2.5 text-xs font-semibold text-[var(--tfa-accent-foreground)] transition-opacity hover:opacity-85"
+          >
             Sign up
           </Link>
         </div>
