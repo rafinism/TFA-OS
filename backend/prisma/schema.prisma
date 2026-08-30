@@ -92,20 +92,24 @@ enum AuthTokenType {
 }
 
 model User {
-  id                  String               @id @default(cuid())
-  email               String               @unique
-  passwordHash        String
-  displayName         String
-  role                UserRole             @default(USER)
-  status              UserStatus           @default(ACTIVE)
-  emailVerifiedAt     DateTime?
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
-  manager             Manager?
-  managerApplications ManagerApplication[]
-  auditLogs           AuditLog[]
-  notifications       Notification[]
-  authTokens          AuthToken[]
+  id                    String               @id @default(cuid())
+  email                 String               @unique
+  passwordHash          String
+  displayName           String
+  role                  UserRole             @default(USER)
+  status                UserStatus           @default(ACTIVE)
+  emailVerifiedAt       DateTime?
+  constitutionAcceptedAt DateTime?
+  constitutionVersion   String?
+  termsAcceptedAt       DateTime?
+  termsVersion          String?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  manager               Manager?
+  managerApplications   ManagerApplication[]
+  auditLogs             AuditLog[]
+  notifications         Notification[]
+  authTokens            AuthToken[]
 
   @@index([role])
   @@index([status])
