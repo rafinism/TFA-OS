@@ -82,7 +82,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-tfa-accent px-4 text-sm font-semibold text-tfa-accent-foreground transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--tfa-accent)] px-4 text-sm font-semibold text-[var(--tfa-accent-foreground)] transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading && <LoaderCircle size={16} className="animate-spin" />}
               {loading ? "Signing in…" : "Sign in"}
