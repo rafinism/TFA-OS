@@ -7,182 +7,271 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole { USER MANAGER ADMIN }
-enum UserStatus { ACTIVE SUSPENDED DISABLED }
-enum ManagerApplicationStatus { PENDING APPROVED REJECTED WITHDRAWN }
-enum ClubStatus { ACTIVE INACTIVE SUSPENDED }
-enum SeasonStatus { PLANNED ACTIVE COMPLETED CANCELLED }
-enum CompetitionStatus { PLANNED ACTIVE COMPLETED CANCELLED }
-enum CompetitionType { TCL TFC }
-enum TCPAccountType { CLUB TREASURY }
-enum TCPTransactionType { TRANSFER REWARD FINE AUCTION ADJUSTMENT REVERSAL }
-enum PlayerStatus { AVAILABLE CONTRACTED WAIVER RETIRED INACTIVE }
-enum ContractStatus { ACTIVE EXPIRED RELEASED TERMINATED }
-enum ManagerClubStatus { ACTIVE ENDED }
-enum AuthTokenType { PASSWORD_RESET EMAIL_VERIFICATION REFRESH }
+enum UserRole {
+  USER
+  MANAGER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+enum ManagerApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  WITHDRAWN
+}
+
+enum ClubStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum SeasonStatus {
+  PLANNED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum CompetitionStatus {
+  PLANNED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum CompetitionType {
+  TCL
+  TFC
+}
+
+enum TCPAccountType {
+  CLUB
+  TREASURY
+}
+
+enum TCPTransactionType {
+  TRANSFER
+  REWARD
+  FINE
+  AUCTION
+  ADJUSTMENT
+  REVERSAL
+}
+
+enum PlayerStatus {
+  AVAILABLE
+  CONTRACTED
+  WAIVER
+  RETIRED
+  INACTIVE
+}
+
+enum ContractStatus {
+  ACTIVE
+  EXPIRED
+  RELEASED
+  TERMINATED
+}
+
+enum ManagerClubStatus {
+  ACTIVE
+  ENDED
+}
+
+enum AuthTokenType {
+  PASSWORD_RESET
+  EMAIL_VERIFICATION
+  REFRESH
+}
 
 model User {
-  id String @id @default(cuid())
-  email String @unique
-  passwordHash String
-  displayName String
-  role UserRole @default(USER)
-  status UserStatus @default(ACTIVE)
-  emailVerifiedAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  manager Manager?
+  id                  String               @id @default(cuid())
+  email               String               @unique
+  passwordHash        String
+  displayName         String
+  role                UserRole             @default(USER)
+  status              UserStatus           @default(ACTIVE)
+  emailVerifiedAt     DateTime?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  manager             Manager?
   managerApplications ManagerApplication[]
-  auditLogs AuditLog[]
-  notifications Notification[]
-  authTokens AuthToken[]
+  auditLogs           AuditLog[]
+  notifications       Notification[]
+  authTokens          AuthToken[]
+
   @@index([role])
   @@index([status])
 }
 
 model AuthToken {
-  id String @id @default(cuid())
-  userId String
-  type AuthTokenType
-  tokenHash String @unique
+  id        String        @id @default(cuid())
+  userId    String
+  type      AuthTokenType
+  tokenHash String        @unique
   expiresAt DateTime
-  usedAt DateTime?
-  createdAt DateTime @default(now())
+  usedAt    DateTime?
+  createdAt DateTime      @default(now())
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId, type, expiresAt])
 }
 
 model Manager {
-  id String @id @default(cuid())
-  userId String @unique
-  appointedAt DateTime @default(now())
-  endedAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  appointedAt DateTime  @default(now())
+  endedAt     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   clubLinks ClubManager[]
 }
 
 model ManagerApplication {
-  id String @id @default(cuid())
-  userId String
-  status ManagerApplicationStatus @default(PENDING)
-  statement String?
+  id         String                   @id @default(cuid())
+  userId     String
+  status     ManagerApplicationStatus @default(PENDING)
+  statement  String?
   reviewedAt DateTime?
   reviewedBy String?
   reviewNote String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime                 @default(now())
+  updatedAt  DateTime                 @updatedAt
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId, status])
   @@index([status])
 }
 
 model Club {
-  id String @id @default(cuid())
-  name String @unique
-  shortName String? @unique
-  status ClubStatus @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  managers ClubManager[]
-  tcpAccount TCPAccount?
-  contracts PlayerContract[]
+  id        String     @id @default(cuid())
+  name      String     @unique
+  shortName String?    @unique
+  status    ClubStatus @default(ACTIVE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  managers     ClubManager[]
+  tcpAccount   TCPAccount?
+  contracts    PlayerContract[]
   competitions CompetitionClub[]
-  homeMatches Match[] @relation("HomeClub")
-  awayMatches Match[] @relation("AwayClub")
+  homeMatches  Match[]           @relation("HomeClub")
+  awayMatches  Match[]           @relation("AwayClub")
 }
 
 model ClubManager {
-  id String @id @default(cuid())
-  clubId String
+  id        String            @id @default(cuid())
+  clubId    String
   managerId String
-  status ManagerClubStatus @default(ACTIVE)
-  startedAt DateTime @default(now())
-  endedAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  status    ManagerClubStatus @default(ACTIVE)
+  startedAt DateTime          @default(now())
+  endedAt   DateTime?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  club    Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
   manager Manager @relation(fields: [managerId], references: [id], onDelete: Cascade)
+
   @@index([clubId, status])
   @@index([managerId, status])
 }
 
 model Season {
-  id String @id @default(cuid())
-  name String @unique
-  number Int @unique
-  status SeasonStatus @default(PLANNED)
-  startsAt DateTime?
-  endsAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String       @id @default(cuid())
+  name      String       @unique
+  number    Int          @unique
+  status    SeasonStatus @default(PLANNED)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
   competitions Competition[]
-  contracts PlayerContract[]
+  contracts    PlayerContract[]
+
   @@index([status])
 }
 
 model Competition {
-  id String @id @default(cuid())
-  seasonId String
-  name String
-  type CompetitionType
-  status CompetitionStatus @default(PLANNED)
-  startsAt DateTime?
-  endsAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  season Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
-  clubs CompetitionClub[]
+  id        String            @id @default(cuid())
+  seasonId  String
+  name      String
+  type      CompetitionType
+  status    CompetitionStatus @default(PLANNED)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  season  Season            @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  clubs   CompetitionClub[]
   matches Match[]
+
   @@unique([seasonId, name])
   @@index([seasonId, type])
   @@index([status])
 }
 
 model CompetitionClub {
-  id String @id @default(cuid())
+  id            String   @id @default(cuid())
   competitionId String
-  clubId String
-  joinedAt DateTime @default(now())
-  createdAt DateTime @default(now())
+  clubId        String
+  joinedAt      DateTime @default(now())
+  createdAt     DateTime @default(now())
+
   competition Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
-  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  club        Club        @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
   @@unique([competitionId, clubId])
 }
 
 model Player {
-  id String @id @default(cuid())
-  name String
-  country String?
+  id        String       @id @default(cuid())
+  name      String
+  country   String?
   positions String?
-  imageUrl String?
-  status PlayerStatus @default(AVAILABLE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  imageUrl  String?
+  status    PlayerStatus @default(AVAILABLE)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
   contracts PlayerContract[]
+
   @@index([status])
   @@index([name])
 }
 
 model PlayerContract {
-  id String @id @default(cuid())
-  playerId String
-  clubId String
-  seasonId String
-  startDate DateTime
-  endDate DateTime
-  duration Int
-  fee Decimal @db.Decimal(14, 2)
-  status ContractStatus @default(ACTIVE)
-  signedAt DateTime @default(now())
+  id         String         @id @default(cuid())
+  playerId   String
+  clubId     String
+  seasonId   String
+  startDate  DateTime
+  endDate    DateTime
+  duration   Int
+  fee        Decimal        @db.Decimal(14, 2)
+  status     ContractStatus @default(ACTIVE)
+  signedAt   DateTime       @default(now())
   releasedAt DateTime?
-  releaseFee Decimal? @db.Decimal(14, 2)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  releaseFee Decimal?       @db.Decimal(14, 2)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
   player Player @relation(fields: [playerId], references: [id], onDelete: Restrict)
-  club Club @relation(fields: [clubId], references: [id], onDelete: Restrict)
+  club   Club   @relation(fields: [clubId], references: [id], onDelete: Restrict)
   season Season @relation(fields: [seasonId], references: [id], onDelete: Restrict)
+
   @@index([playerId, status])
   @@index([clubId, status])
   @@index([seasonId])
@@ -190,32 +279,38 @@ model PlayerContract {
 }
 
 model TCPAccount {
-  id String @id @default(cuid())
-  type TCPAccountType
-  clubId String? @unique
-  name String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  club Club? @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  id        String         @id @default(cuid())
+  type      TCPAccountType
+  clubId    String?        @unique
+  name      String         @unique
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  club        Club?            @relation(fields: [clubId], references: [id], onDelete: Cascade)
   entriesFrom TCPTransaction[] @relation("FromAccount")
-  entriesTo TCPTransaction[] @relation("ToAccount")
+  entriesTo   TCPTransaction[] @relation("ToAccount")
+
   @@index([type])
 }
 
 model TCPTransaction {
-  id String @id @default(cuid())
+  id            String             @id @default(cuid())
   fromAccountId String?
-  toAccountId String?
-  amount Decimal @db.Decimal(14, 2)
-  type TCPTransactionType
-  description String
+  toAccountId   String?
+  amount        Decimal            @db.Decimal(14, 2)
+  type          TCPTransactionType
+  description   String
   referenceType String?
-  referenceId String?
-  reversedId String? @unique
-  createdAt DateTime @default(now())
+  referenceId   String?
+  reversedId    String?            @unique
+  createdAt     DateTime           @default(now())
+
   fromAccount TCPAccount? @relation("FromAccount", fields: [fromAccountId], references: [id], onDelete: Restrict)
-  toAccount TCPAccount? @relation("ToAccount", fields: [toAccountId], references: [id], onDelete: Restrict)
-  reversed TCPTransaction? @relation("Reversal", fields: [reversedId], references: [id], onDelete: Restrict)
+  toAccount   TCPAccount? @relation("ToAccount", fields: [toAccountId], references: [id], onDelete: Restrict)
+
+  reversed   TCPTransaction? @relation("Reversal", fields: [reversedId], references: [id], onDelete: Restrict)
+  reversalOf TCPTransaction? @relation("Reversal")
+
   @@index([fromAccountId, createdAt])
   @@index([toAccountId, createdAt])
   @@index([type, createdAt])
@@ -223,46 +318,52 @@ model TCPTransaction {
 }
 
 model Match {
-  id String @id @default(cuid())
+  id            String    @id @default(cuid())
   competitionId String
-  homeClubId String
-  awayClubId String
-  scheduledAt DateTime?
-  playedAt DateTime?
-  homeScore Int?
-  awayScore Int?
-  verifiedAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  homeClubId    String
+  awayClubId    String
+  scheduledAt   DateTime?
+  playedAt      DateTime?
+  homeScore     Int?
+  awayScore     Int?
+  verifiedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
   competition Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
-  homeClub Club @relation("HomeClub", fields: [homeClubId], references: [id], onDelete: Restrict)
-  awayClub Club @relation("AwayClub", fields: [awayClubId], references: [id], onDelete: Restrict)
+  homeClub    Club        @relation("HomeClub", fields: [homeClubId], references: [id], onDelete: Restrict)
+  awayClub    Club        @relation("AwayClub", fields: [awayClubId], references: [id], onDelete: Restrict)
+
   @@index([competitionId, scheduledAt])
   @@index([homeClubId])
   @@index([awayClubId])
 }
 
 model AuditLog {
-  id String @id @default(cuid())
-  userId String?
-  action String
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
   entityType String
-  entityId String?
-  details Json?
-  createdAt DateTime @default(now())
+  entityId   String?
+  details    Json?
+  createdAt  DateTime @default(now())
+
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
   @@index([userId, createdAt])
   @@index([entityType, entityId])
   @@index([createdAt])
 }
 
 model Notification {
-  id String @id @default(cuid())
-  userId String
-  title String
-  message String
-  readAt DateTime?
-  createdAt DateTime @default(now())
+  id        String    @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId, readAt, createdAt])
 }
