@@ -25,8 +25,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return data as T;
 }
 
-export async function register(email: string, password: string, displayName: string) {
-  return request<AuthUser & { message: string }>("/auth/register", { method: "POST", body: JSON.stringify({ email, password, displayName }) });
+export async function register(email: string, password: string, displayName: string, acceptConstitution: boolean, acceptTerms: boolean) {
+  return request<AuthUser & { message: string }>("/auth/register", {
+    method: "POST",
+    body: JSON.stringify({ email, password, displayName, acceptConstitution, acceptTerms }),
+  });
 }
 
 export async function login(email: string, password: string) {
