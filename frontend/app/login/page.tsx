@@ -59,12 +59,7 @@ export default function LoginPage() {
             </label>
 
             <label className="block">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-xs font-semibold text-tfa-text-secondary">Password</span>
-                <Link href="/forgot-password" className="text-xs font-medium text-tfa-info hover:underline">
-                  Forgot password?
-                </Link>
-              </div>
+              <span className="text-xs font-semibold text-tfa-text-secondary">Password</span>
               <input
                 required
                 type="password"
@@ -73,6 +68,9 @@ export default function LoginPage() {
                 onChange={(event) => setPassword(event.target.value)}
                 className="mt-2 block w-full rounded-xl border border-tfa-border bg-tfa-background px-3.5 py-3 text-sm outline-none transition focus:border-tfa-info"
               />
+              <Link href="/forgot-password" className="mt-2 inline-block text-xs font-medium text-tfa-info hover:underline">
+                Forgot password?
+              </Link>
             </label>
 
             {error && (
@@ -90,6 +88,12 @@ export default function LoginPage() {
               {loading ? "Signing in…" : "Sign in"}
             </button>
           </form>
+
+          <div className="mt-6 border-t border-tfa-border-subtle pt-6 text-center">
+            <p className="text-xs text-tfa-text-muted">
+              Don’t have an account? <Link href="/register" className="font-semibold text-tfa-info hover:underline">Create one</Link>
+            </p>
+          </div>
         </section>
       </div>
     </main>
