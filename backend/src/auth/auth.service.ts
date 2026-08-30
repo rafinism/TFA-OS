@@ -11,6 +11,9 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { EmailService } from './email.service';
 
+const CONSTITUTION_VERSION = 'First Edition';
+const TERMS_VERSION = '1.0';
+
 @Injectable()
 export class AuthService {
   constructor(private readonly prisma: PrismaService, private readonly jwt: JwtService, private readonly config: ConfigService, private readonly email: EmailService) {}
@@ -33,11 +36,43 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
+    if (dto.acceptConstitution !== true || dto.acceptTerms !== true) {
+      throw new ConflictException('You must accept the TFA Constitution and Terms and Conditions to create an account.');
+    }
+
     const email = dto.email.trim().toLowerCase();
     const existing = await this.prisma.user.findUnique({ where: { email } });
     if (existing) throw new ConflictException('An account with this email already exists.');
+
+    const now = new Date();
     const passwordHash = await argon2.hash(dto.password);
-    const user = await this.prisma.user.create({ data: { email, passwordHash, displayName: dto.displayName.trim() }, select: { id: true, email: true, displayName: true, role: true, status: true, emailVerifiedAt: true } });
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        passwordHash,
+        displayName: dto.displayName.trim(),
+        constitutionAcceptedAt: now,
+        constitutionVersion: CONSTITUTION_VERSION,
+        termsAcceptedAt: now,
+        termsVersion: TERMS_VERSION,
+      },
+      select: { id: true, email: true, displayName: true, role: true, status: true, emailVerifiedAt: true },
+    });
+
+    await this.prisma.auditLog.create({
+      data: {
+        userId: user.id,
+        action: 'REGISTRATION_POLICY_ACCEPTED',
+        entityType: 'User',
+        entityId: user.id,
+        details: {
+          constitutionVersion: CONSTITUTION_VERSION,
+          termsVersion: TERMS_VERSION,
+          acceptedAt: now.toISOString(),
+        },
+      },
+    });
+
     const token = await this.createEmailVerificationToken(user.id);
     await this.email.sendEmailVerification(user.email, token);
     return { ...this.publicUser(user), message: 'Account created. Check your email to verify your address before signing in.' };
@@ -60,8 +95,20 @@ export class AuthService {
 
   async verifyEmail(dto: VerifyEmailDto) {
     const tokenHash = createHash('sha256').update(dto.token).digest('hex');
-    const token = await this.prisma.authToken.findUnique({ where: { tokenHash } });
-    if (!token || token.type !== 'EMAIL_VERIFICATION' || token.usedAt || token.expiresAt <= new Date()) throw new UnauthorizedException('Invalid or expired email verification link.');
+    const token = await this.prisma.authToken.findUnique({ where: { tokenHash }, include: { user: { select: { emailVerifiedAt: true } } } });
+
+    if (!token) throw new UnauthorizedException('Invalid or expired email verification link.');
+
+    // React Strict Mode can run the verification effect twice during development.
+    // Treat an already-consumed token for an already-verified account as success.
+    if (token.usedAt && token.user.emailVerifiedAt) {
+      return { message: 'Email address verified successfully. You can now sign in.' };
+    }
+
+    if (token.type !== 'EMAIL_VERIFICATION' || token.usedAt || token.expiresAt <= new Date()) {
+      throw new UnauthorizedException('Invalid or expired email verification link.');
+    }
+
     const now = new Date();
     await this.prisma.$transaction([
       this.prisma.user.update({ where: { id: token.userId }, data: { emailVerifiedAt: now } }),
